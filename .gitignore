@@ -1,0 +1,5 @@
+# the original reference pictures stay local; compressed copies live inside themes/*.css and *.json
+/*.png
+/*.jpg
+.claude/
+__pycache__/
