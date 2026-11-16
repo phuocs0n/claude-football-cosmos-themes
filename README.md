@@ -1,9 +1,9 @@
 # Football & Cosmos — Claude Desktop Themes
 
 Five themes for the [Claude Desktop Themes](https://github.com/0toshigami/claude-desktop-themes) mod (`themes-for-claude`), each made from one painting or photo.
-When you open a **new chat**, the start page shows that picture in a frame above Clawd.
+The picture fills the whole window: bright on the **new chat** page, dimmed behind the text inside a conversation.
 
-Năm theme cho mod Claude Desktop Themes, mỗi theme làm từ một bức ảnh. Khi mở **New chat**, trang mở đầu hiện bức ảnh đó trong khung tranh phía trên Clawd.
+Năm theme cho mod Claude Desktop Themes, mỗi theme làm từ một bức ảnh. Ảnh phủ kín cả cửa sổ: hiện rõ ở trang **New chat**, và làm tối bớt phía sau chữ khi đang chat.
 
 | Theme | Picture | Colors | Mood |
 |---|---|---|---|
@@ -41,7 +41,7 @@ Then in Claude Desktop run **`/themes`** and pick a theme in the **Yours** tab �
 
 ```
 themes/<id>.json   colors, font, corners, shadows, tile picture
-themes/<id>.css    decorations, reactions, the start-page picture (embedded as a data URL)
+themes/<id>.css    decorations, reactions, the full-window picture (embedded as a data URL)
 tools/embed_photos.py   re-embeds the pictures: python tools/embed_photos.py <folder with the pictures>
 ```
 

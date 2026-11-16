@@ -1,7 +1,7 @@
 """Embed the reference pictures into the themes.
 
 For each theme it writes:
-  - the start-page picture into <id>.css, replacing the data:image/jpeg URL (or the PHOTO placeholder)
+  - the full-window background picture into <id>.css, replacing the data:image/jpeg URL (or the PHOTO placeholder)
   - a small copy of the picture as the theme's tile (`deco` in <id>.json)
 
 Usage: python tools/embed_photos.py <folder with the pictures> [themes folder]
@@ -56,8 +56,21 @@ def main() -> None:
         css_path = themes / f"{tid}.css"
         css = css_path.read_text(encoding="utf-8")
         rest = len(PHOTO.sub("", css))
-        big = img.resize((960, round(960 * img.height / img.width)), Image.LANCZOS)
-        photo = fit(big, CSS_LIMIT - rest - 2_000)
+        # the picture fills the window, so keep it as wide as fits the mod's limit: width first, then quality
+        # (the mod adds its own _base.css, about 1,100 characters, before it checks the limit)
+        budget, photo = CSS_LIMIT - rest - 5_000, None
+        for width in (1600, 1440, 1280, 1152, 1024, 900):
+            big = img.resize((width, round(width * img.height / img.width)), Image.LANCZOS)
+            for q in (72, 64, 56, 50):
+                data = jpeg(big, q)
+                if len(data) <= budget:
+                    photo = data
+                    break
+            if photo:
+                print(f"{tid}: picture {width}px q{q}")
+                break
+        if not photo:
+            raise SystemExit(f"{tid}: picture does not fit")
         css = PHOTO.sub(lambda m: "data:image/jpeg;base64," + photo if m.group(0).startswith("data:") else photo, css, count=1)
         css_path.write_text(css, encoding="utf-8")
 
