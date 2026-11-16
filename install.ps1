@@ -21,4 +21,12 @@ foreach ($id in $ids) {
   }
   Write-Host "installed $id"
 }
+# /themes as a command file too: the mod registers /themes only once a chat has started, so a new chat's slash menu
+# did not list it; with this file every chat lists it, and the mod's own hook still answers it with the theme strip
+$cmds = Join-Path $env:USERPROFILE '.claude\commands'
+New-Item -ItemType Directory -Force $cmds | Out-Null
+$cmdLocal = if ($PSScriptRoot) { Join-Path $PSScriptRoot 'commands\themes.md' } else { $null }
+if ($cmdLocal -and (Test-Path $cmdLocal)) { Copy-Item $cmdLocal (Join-Path $cmds 'themes.md') -Force }
+else { Invoke-WebRequest -UseBasicParsing "$($raw -replace '/themes$', '')/commands/themes.md" -OutFile (Join-Path $cmds 'themes.md') }
+Write-Host "installed the /themes command"
 Write-Host "Done. In Claude Desktop, run /themes and pick a theme in the 'Yours' tab."

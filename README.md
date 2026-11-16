@@ -33,7 +33,10 @@ curl -fsSL https://raw.githubusercontent.com/phuocs0n/claude-football-cosmos-the
 ```
 
 Or clone the repo and run `install.ps1` / `install.sh`. They copy `themes/*.json` and `themes/*.css` into
-`~/.claude/themes-for-claude/`.
+`~/.claude/themes-for-claude/`, and `commands/themes.md` into `~/.claude/commands/`.
+
+Why the command file: the mod registers `/themes` only once a chat has started, so a brand-new chat's slash menu
+did not list it. The file makes `/themes` show in every chat; the mod's own hook still answers it and opens the strip.
 
 Then in Claude Desktop run **`/themes`** and pick a theme in the **Yours** tab â€” no restart needed.
 
@@ -42,6 +45,7 @@ Then in Claude Desktop run **`/themes`** and pick a theme in the **Yours** tab â
 ```
 themes/<id>.json   colors, font, corners, shadows, tile picture
 themes/<id>.css    decorations, reactions, the full-window picture (embedded as a data URL)
+commands/themes.md   makes /themes show in every chat's slash menu
 tools/embed_photos.py   re-embeds the pictures: python tools/embed_photos.py <folder with the pictures>
 ```
 

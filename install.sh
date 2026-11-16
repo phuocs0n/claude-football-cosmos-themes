@@ -15,4 +15,10 @@ for id in $ids; do
   done
   echo "installed $id"
 done
+# /themes as a command file too: the mod registers /themes only once a chat has started, so a new chat's slash menu
+# did not list it; with this file every chat lists it, and the mod's own hook still answers it with the theme strip
+mkdir -p "$HOME/.claude/commands"
+cmd="$(dirname "$here")/commands/themes.md"
+if [ -f "$cmd" ]; then cp "$cmd" "$HOME/.claude/commands/"; else curl -fsSL "${raw%/themes}/commands/themes.md" -o "$HOME/.claude/commands/themes.md"; fi
+echo "installed the /themes command"
 echo "Done. In Claude Desktop, run /themes and pick a theme in the 'Yours' tab."
